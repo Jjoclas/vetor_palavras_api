@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import pool
 from decouple import config
+from func.log_erro import log_erro
 
 num_limite_conexoes =       config('LIMITE_CONEXOES')
 list_conexoes_disponiveis = [num for num in range(num_limite_conexoes)]
@@ -20,9 +21,7 @@ def cria_connection_pool():
         conn.set_client_encoding('UTF8')
         conn.autocommit = True
     except psycopg2.Error as e:
-        print("Não foi possivel conectar!")
-        print(e.pgerror)
-        print(e.diag.message_detail)
+        log_erro(e.pgerror)
 
 # Inicializa o pool de conexões ao inciar o servidor
 cria_connection_pool()
@@ -66,7 +65,7 @@ def executar_query(sql, commit=False, parametros_sql=[], **kwargs):
         if not conn_local.closed: # == 0 Conexao aberta; != 0 Conexao fechada ou com erro
             conn_local.rollback()
 
-        log_erro_banco(sql, parametros_sql, exe.__str__())
+        log_erro(sql, parametros_sql, exe.__str__())
 
         raise Exception
     

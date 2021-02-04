@@ -1,0 +1,9 @@
+
+    ----------------- 03/02/2021 22:03:13 -----------------
+    Desc. do Erro: 'Request' object has no attribute 'params'
+    
+    
+    ----------------- 03/02/2021 22:04:33 -----------------
+    Desc. do Erro: 'Request' object has no attribute 'params'
+    
+    
