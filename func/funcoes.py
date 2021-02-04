@@ -8,26 +8,25 @@ def prepara_arquivo(list_arquivos):
     list_nomes =    []
 
     for arquivo in list_arquivos:
-        list_conteudo.append(str(arquivo.read().decode('utf-8')))
-        stop_words = set(stopwords.words('portuguese') + list(punctuation))
+        #lendo o arquivo e transformando em lower case e removendo pontuações
+        list_conteudo.append(str(arquivo.read().decode('utf-8').lower()).translate(str.maketrans('', '', punctuation)))
+        stop_words = set(stopwords.words('portuguese'))
         list_nomes.append(arquivo.filename)
 
-    #retirando possiveis espaços duplos e colocando tudo em minusculo
-    list_conteudo =         list(map(lambda string: " ".join(string.split()).lower(), list_conteudo))
+    #retirando stop words
+    list_conteudo =         list(map(lambda string: [palavra for palavra in string.split(' ') if palavra not in stop_words], list_conteudo))
     dsc_conteudo_geral =    ''
     dict_arquivos =         {}
 
-    for dsc_nome, dsc_conteudo in zip(list_nomes, list_conteudo):
+    for dsc_nome, lista_palavras in zip(list_nomes, list_conteudo):
         
-        #retirando stop words.
-        list_sem_stop_word = [palavra for palavra in dsc_conteudo if palavra not in stop_words]
         
-        dict_arquivos[dsc_nome] = list_sem_stop_word
-        dsc_conteudo_geral += f"{dsc_conteudo_geral} {' '.join(list_sem_stop_word)}"
+        dict_arquivos[dsc_nome] = lista_palavras
+        dsc_conteudo_geral += f"{dsc_conteudo_geral} {' '.join(lista_palavras)}"
     
     return {
         'arquivos':             dict_arquivos,
-        'list_vocabulario_un':  list(set(dsc_conteudo_geral.split(' ')))
+        'list_vocabulario_un':  list(set(filter(bool, dsc_conteudo_geral.split(' '))))
     }   
 
 def monta_vetor(list_arquivos, n_gram):
@@ -42,7 +41,7 @@ def monta_vetor(list_arquivos, n_gram):
     dict_vetores_arquivos = {}
 
     for nome_arquivo in arquivos:
-        dict_vetores_arquivos[nome_arquivo] = [list_vocabulario.count(palavra) for palavra in arquivos[nome_arquivo]] 
+        dict_vetores_arquivos[nome_arquivo] = [arquivos[nome_arquivo].count(palavra) for palavra in list_vocabulario] 
 
     return {
         'vocabulario': list_vocabulario,
