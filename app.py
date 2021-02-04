@@ -21,19 +21,25 @@ def server_error():
 
 @application.route('/api', methods=['POST'])
 def home():
-    dsc_tipo_retorno = request.json.get('tipo_retorno')
-    file_texto       = request.files.get('files')
-    print(file_texto)
-    print(dict(request.files))
+    dsc_tipo_retorno =  request.params.get('tipo_retorno')
+    file_arquivos =     request.files.getlist('files[]')
+
+    if not dsc_tipo_retorno:
+        return Response(json.dumps({
+            'status': 'erro',
+            'msg': 'Favor informe o tipo de retorno desejado, chave:(tipo_retorno).'
+        }), status=401)
+
+    if not file_texto:
+        return Response(json.dumps({
+            'status': 'erro',
+            'msg': 'Os arquivos não foram informados, chave:(files[]).'
+        }), status=401)
+
     return 'deu certo'
 
 
 
 
 if __name__ == "__main__":
-    # Setting debug to True enables debug output. This line should be
-    # removed before deploying a production application.
-    application.debug = True
-    application.config['JSON_SORT_KEYS'] = False
-    application.config['JSON_AS_ASCII'] = False
     application.run(threaded=True, host="0.0.0.0")
