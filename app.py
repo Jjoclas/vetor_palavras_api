@@ -41,7 +41,7 @@ def api():
 
 
     dsc_tipo_retorno =  request.form.get('tipo_retorno')
-    file_arquivos =     request.files.getlist('files[]') 
+    list_arquivos =     request.files.getlist('files[]') 
 
     if not dsc_tipo_retorno:
         dict_retorno = {
@@ -50,13 +50,15 @@ def api():
         }
         num_status=401
 
-    if not file_arquivos:
+    if not list_arquivos:
         dict_retorno = {
             'status': 'erro',
             'msg': 'Os arquivos nao foram informados, chave:(files[]).'
         }
         num_status=401
-        
+    
+
+
     log_acesso_banco(request, dict_retorno, num_status, request.remote_addr)
     return Response(json.dumps(dict_retorno), status=num_status)
 
