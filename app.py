@@ -29,8 +29,10 @@ def server_error():
 
 @application.route('/api', methods=['POST'])
 def api():
+    from func.funcoes import monta_vetor
+
     dict_retorno =      {}
-    num_status =        500 
+    num_status =        200 
     
     if not request.form and not request.files:
         dict_retorno = {
@@ -40,23 +42,28 @@ def api():
         num_status=401
 
 
-    dsc_tipo_retorno =  request.form.get('tipo_retorno')
-    file_arquivos =     request.files.getlist('files[]') 
+    num_gram =          request.form.get('n_gram', 1)
+    list_arquivos =     request.files.getlist('files[]') 
 
-    if not dsc_tipo_retorno:
+    if isinstance(num_gram, str) and num_gram.isnumeric():
+        num_gram = int(num_gram)
+        
+    if not num_gram:
         dict_retorno = {
             'status': 'erro',
-            'msg': 'Favor informe o tipo de retorno desejado, chave:(tipo_retorno).'
+            'msg': 'Favor informe o numero de palavras por posicao do vetor, chave:(n_gram).'
         }
         num_status=401
 
-    if not file_arquivos:
+    if not list_arquivos:
         dict_retorno = {
             'status': 'erro',
             'msg': 'Os arquivos nao foram informados, chave:(files[]).'
         }
         num_status=401
-        
+    
+    dict_retorno = monta_vetor(list_arquivos, num_gram)
+
     log_acesso_banco(request, dict_retorno, num_status, request.remote_addr)
     return Response(json.dumps(dict_retorno), status=num_status)
 
