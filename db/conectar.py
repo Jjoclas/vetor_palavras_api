@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2 import pool
 from decouple import config
-from func.log_erro import log_erro
+from func.log import log_erro
 
-num_limite_conexoes =       config('LIMITE_CONEXOES')
+num_limite_conexoes =       int(config('LIMITE_CONEXOES', 1))
 list_conexoes_disponiveis = [num for num in range(num_limite_conexoes)]
 list_conexoes_utilizadas =  []
 

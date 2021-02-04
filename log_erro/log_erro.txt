@@ -7,3 +7,51 @@
     Desc. do Erro: 'Request' object has no attribute 'params'
     
     
+    ----------------- 03/02/2021 22:35:32 -----------------
+    Desc. do Erro: 'Request' object has no attribute 'params'
+    
+    
+    ----------------- 03/02/2021 22:37:30 -----------------
+    Desc. do Erro: name 'file_texto' is not defined
+    
+    
+    ----------------- 03/02/2021 22:39:16 -----------------
+    Desc. do Erro: 'Request' object has no attribute 'params'
+    
+    
+    ----------------- 03/02/2021 22:39:56 -----------------
+    Desc. do Erro: 'str' object cannot be interpreted as an integer
+    
+    
+    ----------------- 03/02/2021 22:43:43 -----------------
+    Desc. do Erro: 
+        insert into vetor_palavras.log_acesso 
+        (json_req, json_response, num_status)
+        values (%s, %s, %s)
+    
+    
+    
+    ----------------- 03/02/2021 22:45:19 -----------------
+    Desc. do Erro: 
+        insert into vetor_palavras.log_acesso 
+        (json_req, json_response, num_status)
+        values (%s, %s, %s)
+    
+    
+    
+    ----------------- 03/02/2021 22:45:55 -----------------
+    Desc. do Erro: 
+        insert into vetor_palavras.log_acesso 
+        (json_req, json_response, num_status)
+        values (%s, %s, %s)
+    
+    
+    
+    ----------------- 03/02/2021 22:49:31 -----------------
+    Desc. do Erro: 
+        insert into vetor_palavras.log_acesso 
+        (json_req, json_response, num_status_code, dsc_ip)
+        values (%s, %s, %s)
+    
+    
+    
