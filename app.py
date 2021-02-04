@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, make_response, Response
 from decouple import config
+import json
 
 application = Flask('vetor_palavras')
 
 
 @application.errorhandler(Exception)
 def redirect_error(err):
-    print(err)
+    from func.log_erro import log_erro
+    log_erro(err)
     return server_error()
 
 
@@ -22,7 +24,7 @@ def server_error():
 @application.route('/api', methods=['POST'])
 def home():
     dsc_tipo_retorno =  request.params.get('tipo_retorno')
-    file_arquivos =     request.files.getlist('files[]')
+    file_arquivos =     request.files.getlist('files[]') 
 
     if not dsc_tipo_retorno:
         return Response(json.dumps({
@@ -42,4 +44,5 @@ def home():
 
 
 if __name__ == "__main__":
+    application.debug = True
     application.run(threaded=True, host="0.0.0.0")
