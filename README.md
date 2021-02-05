@@ -178,3 +178,6 @@ Caso exista apenas 1 versão do Python instalada no computador, utilizar o coman
 ```
 pip install -r requirements.txt
 ```
+
+#### Por ultimo cria um arquivo .env na raiz do projeto seguindo o exemplo do .env.sample
+É importante que a url que contem o acesso para o banco de dados esteja preenchido
