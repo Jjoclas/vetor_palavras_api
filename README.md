@@ -114,7 +114,7 @@ No caso de n_gram = 2:
 ## API:
 Foi utilizado o Flask na criação da API, a escolha foi dada pela facilidade e agilidade no desenvolvimento com essa tecnologia.
 
-Hospedado na AWS utilizando o ElastickBeanStalk [link]
+Hospedado na AWS utilizando o ElastickBeanStalk [http://vetorpalavras-env.eba-m3mvbcfn.us-east-1.elasticbeanstalk.com/]
 
 ## Banco de dados:
 Foi utilizado o PostgreSQl hospedado no [elephantSQL](https://www.elephantsql.com/)
