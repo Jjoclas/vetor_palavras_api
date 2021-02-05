@@ -1,3 +1,11 @@
+# Rodando teste unitario:
+## Foi implementado o teste unitario para a função monta_vetor.
+Para realizar o teste basta executar o comando:
+
+```
+python -m unittest test.py
+```
+
 
 # Como Instalar o projeto:
 ### Requerimentos:  
