@@ -55,3 +55,7 @@
     
     
     
+    ----------------- 04/02/2021 20:38:22 -----------------
+    Desc. do Erro: name 'lit_vocabulario' is not defined
+    
+    

@@ -29,7 +29,7 @@ def server_error():
 
 @application.route('/api', methods=['POST'])
 def api():
-    from func.funcoes import monta_vetor
+    from func.funcoes import monta_vetor, prepara_arquivo
 
     dict_retorno =      {}
     num_status =        200 
@@ -61,8 +61,8 @@ def api():
             'msg': 'Os arquivos nao foram informados, chave:(files[]).'
         }
         num_status=401
-    
-    dict_retorno = monta_vetor(list_arquivos, num_gram)
+    dict_arquivos = prepara_arquivo(list_arquivos)
+    dict_retorno =  monta_vetor(dict_arquivos, num_gram)
 
     log_acesso_banco(request, dict_retorno, num_status, request.remote_addr)
     return Response(json.dumps(dict_retorno), status=num_status)

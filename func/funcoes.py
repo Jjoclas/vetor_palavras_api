@@ -9,7 +9,11 @@ def prepara_arquivo(list_arquivos):
 
     for arquivo in list_arquivos:
         #lendo o arquivo e transformando em lower case e removendo pontuações
-        list_conteudo.append(str(arquivo.read().decode('utf-8').lower()).translate(str.maketrans('', '', punctuation)))
+        list_conteudo.append(str(arquivo.read().decode('utf-8'))
+                                .translate(str.maketrans('', '', punctuation)
+                                ).lower()
+                            )
+
         stop_words = set(stopwords.words('portuguese'))
         list_nomes.append(arquivo.filename)
 
@@ -26,24 +30,35 @@ def prepara_arquivo(list_arquivos):
     
     return {
         'arquivos':             dict_arquivos,
-        'list_vocabulario_un':  list(set(filter(bool, dsc_conteudo_geral.split(' '))))
+        'list_vocabulario_un':  list((filter(bool, dsc_conteudo_geral.split(' '))))
     }   
 
-def monta_vetor(list_arquivos, n_gram):
-    dict_arquivos = prepara_arquivo(list_arquivos)
+def monta_vetor(dict_arquivos, n_gram):
+    print(dict_arquivos)
+    print(n_gram)
     
     list_vocabulario =  dict_arquivos.get('list_vocabulario_un')
-    print(list_vocabulario)
     arquivos =          dict_arquivos.get('arquivos', {})
+    
     if n_gram > 1:
-        list_vocabulario = [' '.join(list_vocabulario[i:i+n_gram]) for i, item in enumerate(list_vocabulario)]
+        list_vocabulario = junta_lista_ngram(list_vocabulario, n_gram)
 
     dict_vetores_arquivos = {}
 
     for nome_arquivo in arquivos:
-        dict_vetores_arquivos[nome_arquivo] = [arquivos[nome_arquivo].count(palavra) for palavra in list_vocabulario] 
+
+        if n_gram > 1:
+            list_palavras_arquivo = junta_lista_ngram(arquivos[nome_arquivo], n_gram)
+        else:
+            list_palavras_arquivo = arquivos[nome_arquivo]
+        
+        dict_vetores_arquivos[nome_arquivo] = [list_palavras_arquivo.count(palavra) for palavra in list_vocabulario] 
 
     return {
         'vocabulario': list_vocabulario,
         'vetores' : dict_vetores_arquivos
     }
+
+def junta_lista_ngram(lista, num_gram):
+    return list(set([' '.join(lista[i:i+num_gram]) for i, item in enumerate(lista)
+                        if i + num_gram <= len(lista) ]))
