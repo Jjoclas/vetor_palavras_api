@@ -118,6 +118,7 @@ Hospedado na AWS utilizando o ElastickBeanStalk [http://vetorpalavras-env.eba-m3
 
 ## Banco de dados:
 Foi utilizado o PostgreSQl hospedado no [elephantSQL](https://www.elephantsql.com/)
+o dump está no caminho db\dump-jyiulykp-202102042238.sql
 
 # Rodando teste unitario:
 ## Foi implementado o teste unitario para a função monta_vetor.
