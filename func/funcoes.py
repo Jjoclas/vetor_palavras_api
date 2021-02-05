@@ -33,8 +33,9 @@ def prepara_arquivo(list_arquivos):
         'list_vocabulario_un':  list((filter(bool, dsc_conteudo_geral.split(' '))))
     }   
 
-def monta_vetor(list_arquivos, n_gram):
-    dict_arquivos = prepara_arquivo(list_arquivos)
+def monta_vetor(dict_arquivos, n_gram):
+    print(dict_arquivos)
+    print(n_gram)
     
     list_vocabulario =  dict_arquivos.get('list_vocabulario_un')
     arquivos =          dict_arquivos.get('arquivos', {})
@@ -48,7 +49,9 @@ def monta_vetor(list_arquivos, n_gram):
 
         if n_gram > 1:
             list_palavras_arquivo = junta_lista_ngram(arquivos[nome_arquivo], n_gram)
-    
+        else:
+            list_palavras_arquivo = arquivos[nome_arquivo]
+        
         dict_vetores_arquivos[nome_arquivo] = [list_palavras_arquivo.count(palavra) for palavra in list_vocabulario] 
 
     return {
