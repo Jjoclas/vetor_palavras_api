@@ -1,3 +1,18 @@
+def monta_retorno(request, dict_retorno, num_status, ip):
+    import json
+    import threading
+    from flask import Response
+    from func.log import log_acesso_banco
+
+    json_request = json.dumps({
+        'boo_files' :   bool(request.files),
+        'form' :        dict(request.form)
+    })
+    try:
+        return Response(json.dumps(dict_retorno), status=num_status)
+    finally:
+        thread = threading.Thread(target=log_acesso_banco, args=(json_request, dict_retorno, num_status, ip)).start()
+
 def prepara_arquivo(list_arquivos):
     import re
     import nltk
@@ -34,8 +49,6 @@ def prepara_arquivo(list_arquivos):
     }   
 
 def monta_vetor(dict_arquivos, n_gram):
-    print(dict_arquivos)
-    print(n_gram)
     
     list_vocabulario =  dict_arquivos.get('list_vocabulario_un')
     arquivos =          dict_arquivos.get('arquivos', {})

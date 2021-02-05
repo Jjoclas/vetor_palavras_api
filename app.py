@@ -2,6 +2,7 @@ import json
 from flask import Flask, request, jsonify, make_response, Response
 from decouple import config
 from func.log import log_acesso_banco
+from func.funcoes import monta_retorno
 
 application = Flask('vetor_palavras')
 
@@ -22,9 +23,8 @@ def server_error():
         'msg': 'Ocorreu um erro ao processar a requisicao, tente novamente mais tarde.'
     }
     num_status = 500
-    log_acesso_banco(request, dict_retorno, num_status, request.remote_addr)
-    return Response(json.dumps(dict_retorno), status=num_status)
 
+    return monta_retorno(request, dict_retorno, num_status, request.remote_addr)
 
 
 @application.route('/api', methods=['POST'])
@@ -64,8 +64,7 @@ def api():
     dict_arquivos = prepara_arquivo(list_arquivos)
     dict_retorno =  monta_vetor(dict_arquivos, num_gram)
 
-    log_acesso_banco(request, dict_retorno, num_status, request.remote_addr)
-    return Response(json.dumps(dict_retorno), status=num_status)
+    return monta_retorno(request, dict_retorno, num_status, request.remote_addr)
 
 
 

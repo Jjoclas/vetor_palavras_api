@@ -24,13 +24,10 @@ def log_erro(dsc_erro, sql=None, list_parametros=None):
         print('Erro ao salvar log de erro.')
         print(e.__str__())
 
-def log_acesso_banco(request, response, status, dsc_ip):
+def log_acesso_banco(json_request, response, status, dsc_ip):
     import json
 
-    json_request = json.dumps({
-        'boo_files' :   bool(request.files),
-        'form' :        dict(request.form)
-    })
+    
     json_response = json.dumps(response)
     from db.conectar import executar_query
     sql="""
